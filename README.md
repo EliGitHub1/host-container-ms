@@ -9,7 +9,7 @@ version:
 
 1.0
 
-Description:
+Description
 
 Restful service in go
 
@@ -26,26 +26,18 @@ How to run
 
 API endpoints
 
-/host
+      /host           GET – Get a list of all hosts, returned as JSON.
 
-GET – Get a list of all hosts, returned as JSON.
+      /host/:id       GET – Get host by its ID, returning the host data as JSON.
 
-/host/:id
-
-GET – Get host by its ID, returning the host data as JSON.
-
-/container
-
-GET – Get a list of all containers, returned as JSON.
-POST - Create a new container in the database.
-
-/container/:id
-
-GET – Get container by its ID, returning the container data as JSON.
-
-/container/:hostId
-
-GET - Get all containers for specific host.
+      /container      GET – Get a list of all containers, returned as JSON.
+                      
+      queryParam      GET - Get all containers for specific host.
+      
+      /container/:id  GET – Get container by its ID, returning the container data as JSON
+      
+      /container      POST - Create a new container in the database.
+      
 
 Test
   1. build...
