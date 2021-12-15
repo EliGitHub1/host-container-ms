@@ -2,21 +2,30 @@ package service
 
 import (
 	"github.com/gin-gonic/gin"
-	"host-container-ms/model"
-	"host-container-ms/utils"
-	"net/http"
+	"host-container-ms/DAO"
 )
 
 func Container(c *gin.Context) {
 	query := "SELECT * FROM containers"
-	utils.ExecuteQueryContainer(c, query)
+	DAO.ExecuteQueryContainer(c, query)
+}
+
+func ContainerByHostId(c *gin.Context, hostId string) {
+
+	query := "SELECT A.id,A.host_id,A.name,A.image_name " +
+		"FROM containers A " +
+		"INNER JOIN hosts B " +
+		"on A.host_id = B.id " +
+		"where " + hostId + " = B.id"
+	DAO.ExecuteQueryContainer(c, query)
 }
 
 func ContainerById(c *gin.Context, hostId string) {
 	query := "SELECT * FROM containers where id=" + hostId
-	utils.ExecuteQueryContainer(c, query)
+	DAO.ExecuteQueryContainer(c, query)
 }
 
-func CreateContainer(c *gin.Context, container model.ContainerRec) {
-	c.IndentedJSON(http.StatusOK, container)
+func CreateContainer(c *gin.Context, image_name int, host_id int, name string) {
+	query := `INSERT INTO containers(image_name, host_id, name) VALUES (?, ?, ?)`
+	DAO.InsertContainer(c, query, image_name, host_id, name)
 }

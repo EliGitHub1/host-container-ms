@@ -1,7 +1,6 @@
 package controller
 
 import (
-	"fmt"
 	"github.com/gin-gonic/gin"
 	"host-container-ms/model"
 	"host-container-ms/service"
@@ -10,7 +9,16 @@ import (
 )
 
 func Container(c *gin.Context) {
-	service.Container(c)
+	hostId := c.Query("host_id")
+	if hostId == "" {
+		service.Container(c)
+	}
+	n, err := strconv.Atoi(hostId)
+	if err != nil || n < 0 {
+		c.IndentedJSON(http.StatusBadRequest, hostId)
+		return
+	}
+	service.ContainerByHostId(c, hostId)
 }
 
 func ContainerById(c *gin.Context) {
@@ -24,11 +32,10 @@ func ContainerById(c *gin.Context) {
 }
 
 func CreateContainer(c *gin.Context) {
-	container := model.ContainerRec{}
+	container := model.ContainerCreateReq{}
 	if err := c.ShouldBindJSON(&container); err != nil {
-		fmt.Println(err)
 		c.IndentedJSON(http.StatusUnauthorized, err)
 		return
 	}
-	service.CreateContainer(c, container)
+	service.CreateContainer(c, container.ImageName, container.HostId, container.Name)
 }

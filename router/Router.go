@@ -15,7 +15,9 @@ func SetupRouter() {
 	r.GET("/container", controller.Container)
 	r.GET("/container/:id", controller.ContainerById)
 	r.POST("/container", controller.CreateContainer)
+
 	r.GET("/host/:id", controller.HostById)
 	r.GET("/host", controller.Host)
+
 	r.Run(PORT)
 }

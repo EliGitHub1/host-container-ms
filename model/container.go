@@ -6,3 +6,9 @@ type ContainerRec struct {
 	Name      string `json:"name"`
 	ImageName int    `json:"image_name"`
 }
+
+type ContainerCreateReq struct {
+	HostId    int    `json:"host_id"`
+	Name      string `json:"name"`
+	ImageName int    `json:"image_name"`
+}

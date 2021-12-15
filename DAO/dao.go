@@ -1,4 +1,4 @@
-package utils
+package DAO
 
 import (
 	"github.com/gin-gonic/gin"
@@ -67,4 +67,21 @@ func ExecuteQueryContainer(c *gin.Context, query string) {
 	} else {
 		c.IndentedJSON(http.StatusOK, containers)
 	}
+}
+
+func InsertContainer(c *gin.Context, query string, image_name int, host_id int, name string) {
+	db := dataBase.GetDataBase()
+	if db == nil {
+		c.IndentedJSON(http.StatusInternalServerError, image_name)
+		return
+	}
+	statement, err := db.Prepare(query)
+	if err != nil {
+		panic(err.Error())
+	}
+	_, err = statement.Exec(image_name, host_id, name)
+	if err != nil {
+		panic(err.Error())
+	}
+	c.IndentedJSON(http.StatusOK, image_name)
 }
