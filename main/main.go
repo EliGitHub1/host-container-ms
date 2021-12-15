@@ -1,14 +1,14 @@
 package main
 
 import (
-	"host-container-ms/Router"
 	"host-container-ms/dataBase"
+	"host-container-ms/router"
 	"log"
 )
 
 func main() {
 	if dataBase.GetDataBase() != nil {
-		Router.SetupRouter()
+		router.SetupRouter()
 	} else {
 		log.Fatal("Failed to setup database")
 	}
